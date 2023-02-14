@@ -12,8 +12,8 @@ public class AccidentMem {
 
     private final Map<Integer, Accident> accidents = new ConcurrentHashMap<>();
 
-    public Accident add(Accident accident) {
-        return accidents.put(accident.getId(), accident);
+    public void add(Accident accident) {
+        accidents.put(accident.getId(), accident);
     }
 
     public List<Accident> findAll() {

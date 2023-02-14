@@ -23,9 +23,9 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-item nav-link" th:href="@{/accidents}">Все инциденты</a>
-                <a class="nav-item nav-link" th:if="${user.login != 'Гость'}" th:href="@{/accidents/formAddAccident}">Добавить
-                    инцидент</a>
+                <a class="nav-item nav-link" href="#">Главная</a>
+                <a class="nav-item nav-link" th:href="@{/accidents}">Инциденты</a>
+                <a class="nav-item nav-link active" th:href="@{/createAccident}">Добавить инцидент</a>
                 <a class="nav-item nav-link" th:if="${user.login == 'Гость'}" th:href="@{/accidents/loginPage}">
                     <span th:text="${user.login}"></span>
                     <span> | Войти</span>

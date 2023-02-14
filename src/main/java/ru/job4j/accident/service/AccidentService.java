@@ -13,8 +13,8 @@ public class AccidentService {
 
     private final AccidentMem accidentMem;
 
-    public Accident add(Accident accident) {
-        return accidentMem.add(accident);
+    public void create(Accident accident) {
+        accidentMem.add(accident);
     }
 
     public List<Accident> findAll() {
