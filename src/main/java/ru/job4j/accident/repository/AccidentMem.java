@@ -5,6 +5,7 @@ import ru.job4j.accident.model.Accident;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Repository
@@ -16,7 +17,15 @@ public class AccidentMem {
         accidents.put(accident.getId(), accident);
     }
 
+    public void save(Accident accident) {
+        accidents.replace(accident.getId(), accident);
+    }
+
     public List<Accident> findAll() {
         return accidents.values().stream().toList();
+    }
+
+    public Optional<Accident> findById(int id) {
+        return Optional.of(accidents.get(id));
     }
 }
