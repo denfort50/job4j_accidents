@@ -8,7 +8,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.job4j.accident.model.Accident;
+import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.service.AccidentService;
+
+import java.util.List;
 
 @Controller
 @AllArgsConstructor
@@ -17,7 +20,9 @@ public class AccidentController {
     private final AccidentService accidentService;
 
     @GetMapping("/createAccident")
-    public String viewCreateAccident() {
+    public String viewCreateAccident(Model model) {
+        List<AccidentType> types = accidentService.getAccidentTypes();
+        model.addAttribute("types", types);
         return "createAccident";
     }
 
