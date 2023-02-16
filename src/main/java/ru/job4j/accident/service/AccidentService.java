@@ -14,12 +14,12 @@ public class AccidentService {
 
     private final AccidentMem accidentMem;
 
-    public void create(Accident accident) {
-        accidentMem.add(accident);
+    public Accident create(Accident accident) {
+        return accidentMem.create(accident);
     }
 
-    public void save(Accident accident) {
-        accidentMem.save(accident);
+    public Accident save(Accident accident) {
+        return accidentMem.save(accident);
     }
 
     public List<Accident> findAll() {

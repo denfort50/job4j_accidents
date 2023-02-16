@@ -7,18 +7,22 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Repository
 public class AccidentMem {
 
     private final Map<Integer, Accident> accidents = new ConcurrentHashMap<>();
 
-    public void add(Accident accident) {
-        accidents.put(accident.getId(), accident);
+    private final AtomicInteger id = new AtomicInteger();
+
+    public Accident create(Accident accident) {
+        accident.setId(id.getAndIncrement());
+        return accidents.put(accident.getId(), accident);
     }
 
-    public void save(Accident accident) {
-        accidents.replace(accident.getId(), accident);
+    public Accident save(Accident accident) {
+        return accidents.replace(accident.getId(), accident);
     }
 
     public List<Accident> findAll() {
