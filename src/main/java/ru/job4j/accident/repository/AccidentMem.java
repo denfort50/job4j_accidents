@@ -42,7 +42,7 @@ public class AccidentMem {
         return Optional.of(accidents.get(id));
     }
 
-    public Map<Integer, AccidentType> getAccidentTypes() {
-        return Map.copyOf(accidentTypes);
+    public List<AccidentType> getAccidentTypes() {
+        return accidentTypes.values().stream().toList();
     }
 }
