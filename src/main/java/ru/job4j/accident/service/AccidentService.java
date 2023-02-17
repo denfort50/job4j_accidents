@@ -7,6 +7,7 @@ import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.repository.AccidentMem;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -31,7 +32,7 @@ public class AccidentService {
         return accidentMem.findById(id);
     }
 
-    public List<AccidentType> getAccidentTypes() {
+    public Map<Integer, AccidentType> getAccidentTypes() {
         return accidentMem.getAccidentTypes();
     }
 }

@@ -11,7 +11,7 @@ import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.service.AccidentService;
 
-import java.util.List;
+import java.util.Map;
 
 @Controller
 @AllArgsConstructor
@@ -21,7 +21,7 @@ public class AccidentController {
 
     @GetMapping("/createAccident")
     public String viewCreateAccident(Model model) {
-        List<AccidentType> types = accidentService.getAccidentTypes();
+        Map<Integer, AccidentType> types = accidentService.getAccidentTypes();
         model.addAttribute("types", types);
         return "createAccident";
     }

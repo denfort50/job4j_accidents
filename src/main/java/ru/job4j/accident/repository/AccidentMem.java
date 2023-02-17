@@ -4,7 +4,7 @@ import org.springframework.stereotype.Repository;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.AccidentType;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -16,17 +16,17 @@ public class AccidentMem {
 
     private final Map<Integer, Accident> accidents = new ConcurrentHashMap<>();
 
-    private final List<AccidentType> accidentTypes = new ArrayList<>(List.of(
-            new AccidentType(1, "Две машины"),
-            new AccidentType(2, "Машина и человек"),
-            new AccidentType(3, "Машина и велосипед")
+    private final Map<Integer, AccidentType> accidentTypes = new HashMap<>(Map.of(
+            1, new AccidentType(1, "Две машины"),
+            2, new AccidentType(2, "Машина и человек"),
+            3, new AccidentType(3, "Машина и велосипед")
     ));
 
     private final AtomicInteger id = new AtomicInteger();
 
     public Accident create(Accident accident) {
         accident.setId(id.getAndIncrement());
-        accident.getType().setName(accidentTypes.get(accident.getType().getId()).getName());
+        accident.setType(accidentTypes.get(accident.getType().getId()));
         return accidents.put(accident.getId(), accident);
     }
 
@@ -42,7 +42,7 @@ public class AccidentMem {
         return Optional.of(accidents.get(id));
     }
 
-    public List<AccidentType> getAccidentTypes() {
-        return List.copyOf(accidentTypes);
+    public Map<Integer, AccidentType> getAccidentTypes() {
+        return Map.copyOf(accidentTypes);
     }
 }
