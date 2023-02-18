@@ -3,13 +3,13 @@ package ru.job4j.accident.repository;
 import org.springframework.stereotype.Repository;
 import ru.job4j.accident.model.Accident;
 import ru.job4j.accident.model.AccidentType;
+import ru.job4j.accident.model.Rule;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Repository
 public class AccidentMem {
@@ -20,6 +20,12 @@ public class AccidentMem {
             1, new AccidentType(1, "Две машины"),
             2, new AccidentType(2, "Машина и человек"),
             3, new AccidentType(3, "Машина и велосипед")
+    ));
+
+    private final Map<Integer, Rule> rules = new HashMap<>(Map.of(
+            1, new Rule(1, "Статья. 1"),
+            2, new Rule(2, "Статья. 2"),
+            3, new Rule(3, "Статья. 3")
     ));
 
     private final AtomicInteger id = new AtomicInteger();
@@ -44,5 +50,20 @@ public class AccidentMem {
 
     public List<AccidentType> getAccidentTypes() {
         return accidentTypes.values().stream().toList();
+    }
+
+    public List<Rule> getRules() {
+        return rules.values().stream().toList();
+    }
+
+    public Set<Rule> getRulesByIds(String[] ids) {
+        Set<Rule> result = new HashSet<>();
+        for (String s : ids) {
+            int id = Integer.parseInt(s);
+            if (rules.containsKey(id)) {
+                result.add(rules.get(id));
+            }
+        }
+        return result;
     }
 }
