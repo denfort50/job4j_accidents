@@ -57,13 +57,6 @@ public class AccidentMem {
     }
 
     public Set<Rule> getRulesByIds(String[] ids) {
-        Set<Rule> result = new HashSet<>();
-        for (String s : ids) {
-            int id = Integer.parseInt(s);
-            if (rules.containsKey(id)) {
-                result.add(rules.get(id));
-            }
-        }
-        return result;
+        return Arrays.stream(ids).map(id -> rules.get(Integer.parseInt(id))).collect(Collectors.toSet());
     }
 }
