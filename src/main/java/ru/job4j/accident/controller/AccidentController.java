@@ -13,10 +13,8 @@ import ru.job4j.accident.model.Rule;
 import ru.job4j.accident.service.AccidentService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Controller
 @AllArgsConstructor
@@ -44,7 +42,7 @@ public class AccidentController {
 
     @GetMapping("/editAccident")
     public String edit(@RequestParam("id") int id, Model model) {
-        model.addAttribute("accident", accidentService.findById(id).get());
+        model.addAttribute("accident", accidentService.findById(id).orElseThrow());
         return "editAccident";
     }
 
