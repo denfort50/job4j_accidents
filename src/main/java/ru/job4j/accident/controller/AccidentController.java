@@ -8,47 +8,48 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.job4j.accident.model.Accident;
-import ru.job4j.accident.model.AccidentType;
-import ru.job4j.accident.model.Rule;
 import ru.job4j.accident.service.AccidentService;
+import ru.job4j.accident.service.AccidentTypeService;
+import ru.job4j.accident.service.RuleService;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
-import java.util.Set;
 
 @Controller
 @AllArgsConstructor
 public class AccidentController {
 
     private final AccidentService accidentService;
+    private final AccidentTypeService accidentTypeService;
+    private final RuleService ruleService;
 
     @GetMapping("/createAccident")
     public String viewCreateAccident(Model model) {
-        List<AccidentType> types = accidentService.getAccidentTypes();
-        List<Rule> rules = accidentService.getRules();
-        model.addAttribute("types", types);
-        model.addAttribute("rules", rules);
+        model.addAttribute("types", accidentTypeService.getAccidentTypes());
+        model.addAttribute("rules", ruleService.getRules());
         return "createAccident";
     }
 
     @PostMapping("/saveAccident")
     public String create(@ModelAttribute Accident accident, HttpServletRequest req) {
-        String[] ids = req.getParameterValues("rIds");
-        Set<Rule> rules = accidentService.getRulesByIds(ids);
-        accident.setRules(rules);
-        accidentService.create(accident);
+        accidentService.create(accident, getRulesIdsFromRequest(req));
         return "redirect:/index";
     }
 
-    @GetMapping("/editAccident")
+    @GetMapping("/formUpdateAccident")
     public String edit(@RequestParam("id") int id, Model model) {
-        model.addAttribute("accident", accidentService.findById(id).orElseThrow());
+        model.addAttribute("types", accidentTypeService.getAccidentTypes());
+        model.addAttribute("rules", ruleService.getRules());
+        model.addAttribute("accident", accidentService.findById(id));
         return "editAccident";
     }
 
     @PostMapping("/updateAccident")
-    public String update(@ModelAttribute Accident accident) {
-        accidentService.update(accident);
+    public String update(@ModelAttribute Accident accident, HttpServletRequest req) {
+        accidentService.update(accident, getRulesIdsFromRequest(req));
         return "redirect:/index";
+    }
+
+    private String[] getRulesIdsFromRequest(HttpServletRequest req) {
+        return req.getParameterValues("rIds");
     }
 }

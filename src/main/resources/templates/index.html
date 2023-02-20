@@ -63,7 +63,7 @@
                     <td th:text="${accident.address}"></td>
                     <td>
                         <a th:href="@{|/formUpdateAccident?id=${accident.id}|}">
-                            <i class="fa fa-edit"></i>
+                            <button class="fa fa-edit">Изменить</button>
                         </a>
                     </td>
                     <td th:text="${accident.type.name}"></td>
