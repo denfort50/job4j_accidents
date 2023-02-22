@@ -31,20 +31,11 @@ public class AccidentService {
     }
 
     public List<Accident> findAll() {
-        List<Accident> allAccidents = accidentRepository.findAll();
-        allAccidents.forEach(this::addTypesAndRulesToAccident);
-        return allAccidents;
+        return accidentRepository.findAll();
     }
 
     public Accident findById(int id) {
-        Accident accident = accidentRepository.findById(id).orElseThrow();
-        addTypesAndRulesToAccident(accident);
-        return accident;
-    }
-
-    private void addTypesAndRulesToAccident(Accident accident) {
-        accident.setType(accidentTypeService.findById(accident.getType().getId()));
-        accident.setRules(ruleService.getRulesByAccidentId(accident.getId()));
+        return accidentRepository.findById(id).orElseThrow();
     }
 
 }

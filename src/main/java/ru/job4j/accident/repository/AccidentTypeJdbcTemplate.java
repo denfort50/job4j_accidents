@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 import ru.job4j.accident.model.AccidentType;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 @AllArgsConstructor
@@ -15,15 +14,7 @@ public class AccidentTypeJdbcTemplate {
 
     private final JdbcTemplate jdbcTemplate;
 
-    public List<AccidentType> getAccidentTypes() {
-        return jdbcTemplate.query("select id, name from accident_types",
-                accidentTypeRowMapper);
-    }
-
-    public Optional<AccidentType> findById(int id) {
-        return Optional.ofNullable(jdbcTemplate.queryForObject("select id, name from accident_types where id = ?",
-                accidentTypeRowMapper, id));
-    }
+    private static final String GET_ACCIDENT_TYPES = "select id, name from accident_types";
 
     private final RowMapper<AccidentType> accidentTypeRowMapper = (resultSet, rowNum) -> {
         AccidentType accidentType = new AccidentType();
@@ -31,4 +22,9 @@ public class AccidentTypeJdbcTemplate {
         accidentType.setName(resultSet.getString("name"));
         return accidentType;
     };
+
+    public List<AccidentType> getAccidentTypesFromDB() {
+        return jdbcTemplate.query(GET_ACCIDENT_TYPES, accidentTypeRowMapper);
+    }
+
 }

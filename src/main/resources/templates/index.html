@@ -29,14 +29,14 @@
                 <a class="nav-item nav-link" href="#">Главная</a>
                 <a class="nav-item nav-link" th:href="@{/index}">Инциденты</a>
                 <a class="nav-item nav-link active" th:href="@{/createAccident}">Добавить инцидент</a>
-<!--                <a class="nav-item nav-link" th:if="${user.login == 'Гость'}" th:href="@{/accidents/loginPage}">-->
-<!--                    <span th:text="${user.login}"></span>-->
-<!--                    <span> | Войти</span>-->
-<!--                </a>-->
-<!--                <a class="nav-item nav-link" th:if="${user.login != 'Гость'}" th:href="@{/users/logout}">-->
-<!--                    <span th:text="${user.login}"></span>-->
-<!--                    <span> | Выйти</span>-->
-<!--                </a>-->
+                <!--                <a class="nav-item nav-link" th:if="${user.login == 'Гость'}" th:href="@{/accidents/loginPage}">-->
+                <!--                    <span th:text="${user.login}"></span>-->
+                <!--                    <span> | Войти</span>-->
+                <!--                </a>-->
+                <!--                <a class="nav-item nav-link" th:if="${user.login != 'Гость'}" th:href="@{/users/logout}">-->
+                <!--                    <span th:text="${user.login}"></span>-->
+                <!--                    <span> | Выйти</span>-->
+                <!--                </a>-->
             </div>
         </div>
     </nav>
@@ -67,7 +67,11 @@
                         </a>
                     </td>
                     <td th:text="${accident.type.name}"></td>
-                    <td th:text="${accident.rules}"></td>
+                    <td>
+                        <span th:each="rule: ${accident.rules}">
+                            <a th:text="${rule.name}" style="text-decoration: solid"></a>
+                        </span>
+                    </td>
                 </tr>
                 </tbody>
             </table>

@@ -1,6 +1,5 @@
 package ru.job4j.accident.service;
 
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.job4j.accident.model.AccidentType;
 import ru.job4j.accident.repository.AccidentTypeJdbcTemplate;
@@ -8,16 +7,25 @@ import ru.job4j.accident.repository.AccidentTypeJdbcTemplate;
 import java.util.List;
 
 @Service
-@AllArgsConstructor
 public class AccidentTypeService {
 
     private final AccidentTypeJdbcTemplate accidentTypeJdbcTemplate;
+    private final List<AccidentType> accidentTypeList;
 
-    public List<AccidentType> getAccidentTypes() {
-        return accidentTypeJdbcTemplate.getAccidentTypes();
+    public AccidentTypeService(AccidentTypeJdbcTemplate accidentTypeJdbcTemplate) {
+        this.accidentTypeJdbcTemplate = accidentTypeJdbcTemplate;
+        this.accidentTypeList = getAccidentTypesFromDB();
+    }
+
+    public final List<AccidentType> getAccidentTypesFromDB() {
+        return accidentTypeJdbcTemplate.getAccidentTypesFromDB();
     }
 
     public AccidentType findById(int id) {
-        return accidentTypeJdbcTemplate.findById(id).orElseThrow();
+        return accidentTypeList.get(id);
+    }
+
+    public final List<AccidentType> getAccidentTypes() {
+        return accidentTypeList;
     }
 }

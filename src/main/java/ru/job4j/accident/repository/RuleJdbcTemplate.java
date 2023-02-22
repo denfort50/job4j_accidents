@@ -15,35 +15,9 @@ public class RuleJdbcTemplate {
 
     private final JdbcTemplate jdbcTemplate;
 
-    public List<Rule> getRules() {
-        return jdbcTemplate.query("select id, name from rules", ruleRowMapper);
-    }
-
-    public Set<Rule> getRulesByIds(String[] ids) {
-        String idsForSqlRequest = String.join(",", ids);
-        String sqlRequest = String.format("select id, name from rules where id in (%s)", idsForSqlRequest);
-        return new HashSet<>(jdbcTemplate.query(sqlRequest, ruleRowMapper));
-    }
-
-    public Set<Rule> getRulesByAccidentId(int id) {
-        return new HashSet<>(jdbcTemplate.query("select r.id, r.name from rules r join accidents_rules ar on r.id = ar.rule_id where ar.accident_id = ?",
-                ruleRowMapper, id));
-    }
-
-    public void createAccidentsRulesConnections(Accident accident) {
-        accident.getRules().forEach(rule ->
-                jdbcTemplate.update("insert into accidents_rules (accident_id, rule_id) values (?, ?)",
-                        accident.getId(), rule.getId()));
-    }
-
-    private void deleteAccidentsRulesConnections(Accident accident) {
-        jdbcTemplate.update("delete from accidents_rules where accident_id = ?", accident.getId());
-    }
-
-    public void updateAccidentsRulesConnections(Accident accident) {
-        deleteAccidentsRulesConnections(accident);
-        createAccidentsRulesConnections(accident);
-    }
+    private static final String GET_RULES = "select id, name from rules";
+    private static final String CREATE_CONNECTIONS = "insert into accidents_rules (accident_id, rule_id) values (?, ?)";
+    private static final String DELETE_CONNECTIONS = "delete from accidents_rules where accident_id = ?";
 
     private final RowMapper<Rule> ruleRowMapper = (resultSet, rowNum) -> {
         Rule rule = new Rule();
@@ -51,4 +25,22 @@ public class RuleJdbcTemplate {
         rule.setName(resultSet.getString("name"));
         return rule;
     };
+
+    public List<Rule> getRulesFromDB() {
+        return jdbcTemplate.query(GET_RULES, ruleRowMapper);
+    }
+
+    public void createAccidentsRulesConnections(Accident accident) {
+        accident.getRules().forEach(rule -> jdbcTemplate.update(CREATE_CONNECTIONS, accident.getId(), rule.getId()));
+    }
+
+    private void deleteAccidentsRulesConnections(Accident accident) {
+        jdbcTemplate.update(DELETE_CONNECTIONS, accident.getId());
+    }
+
+    public void updateAccidentsRulesConnections(Accident accident) {
+        deleteAccidentsRulesConnections(accident);
+        createAccidentsRulesConnections(accident);
+    }
+
 }
