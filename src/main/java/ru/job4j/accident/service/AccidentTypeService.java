@@ -2,23 +2,26 @@ package ru.job4j.accident.service;
 
 import org.springframework.stereotype.Service;
 import ru.job4j.accident.model.AccidentType;
-import ru.job4j.accident.repository.hibernate.AccidentTypeHibernate;
+import ru.job4j.accident.repository.data.AccidentTypeRepository;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AccidentTypeService {
 
-    private final AccidentTypeHibernate accidentTypeHibernate;
+    private final AccidentTypeRepository accidentTypeRepository;
     private final List<AccidentType> accidentTypeList;
 
-    public AccidentTypeService(AccidentTypeHibernate accidentTypeHibernate) {
-        this.accidentTypeHibernate = accidentTypeHibernate;
+    public AccidentTypeService(AccidentTypeRepository accidentTypeRepository) {
+        this.accidentTypeRepository = accidentTypeRepository;
         this.accidentTypeList = getAccidentTypesFromDB();
     }
 
     public final List<AccidentType> getAccidentTypesFromDB() {
-        return accidentTypeHibernate.getAccidentTypesFromDB();
+        List<AccidentType> accidentTypes = (List<AccidentType>) accidentTypeRepository.findAll();
+        return accidentTypes.stream().sorted(Comparator.comparingInt(AccidentType::getId)).collect(Collectors.toList());
     }
 
     public AccidentType findById(int id) {

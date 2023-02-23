@@ -2,9 +2,10 @@ package ru.job4j.accident.service;
 
 import org.springframework.stereotype.Service;
 import ru.job4j.accident.model.Rule;
-import ru.job4j.accident.repository.hibernate.RuleHibernate;
+import ru.job4j.accident.repository.data.RuleRepository;
 
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -12,16 +13,17 @@ import java.util.stream.Collectors;
 @Service
 public class RuleService {
 
-    private final RuleHibernate ruleHibernate;
+    private final RuleRepository ruleRepository;
     private final List<Rule> ruleList;
 
-    public RuleService(RuleHibernate ruleHibernate) {
-        this.ruleHibernate = ruleHibernate;
+    public RuleService(RuleRepository ruleRepository) {
+        this.ruleRepository = ruleRepository;
         this.ruleList = getRulesFromDB();
     }
 
     public List<Rule> getRulesFromDB() {
-        return ruleHibernate.getRulesFromDB();
+        List<Rule> rules = (List<Rule>) ruleRepository.findAll();
+        return rules.stream().sorted(Comparator.comparingInt(Rule::getId)).collect(Collectors.toList());
     }
 
     public List<Rule> getRules() {
