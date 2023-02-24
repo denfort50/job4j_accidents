@@ -30,7 +30,7 @@ public class AccidentController {
     @PostMapping("/saveAccident")
     public String create(@ModelAttribute Accident accident, HttpServletRequest req) {
         accidentService.createOrUpdate(accident, getRulesIdsFromRequest(req));
-        return "redirect:/index";
+        return "redirect:/accidents/index";
     }
 
     @GetMapping("/formUpdateAccident")
@@ -44,7 +44,7 @@ public class AccidentController {
     @PostMapping("/updateAccident")
     public String update(@ModelAttribute Accident accident, HttpServletRequest req) {
         accidentService.createOrUpdate(accident, getRulesIdsFromRequest(req));
-        return "redirect:/index";
+        return "redirect:/accidents/index";
     }
 
     private String[] getRulesIdsFromRequest(HttpServletRequest req) {

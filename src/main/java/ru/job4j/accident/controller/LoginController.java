@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("/accidents")
+@RequestMapping("/users")
 public class LoginController {
 
     @GetMapping("/login")
@@ -22,10 +22,10 @@ public class LoginController {
                             Model model) {
         String errorMessage = null;
         if (error != null) {
-            errorMessage = "Username or Password is incorrect !!";
+            errorMessage = "Имя пользователя или пароль неверны!!";
         }
         if (logout != null) {
-            errorMessage = "You have been successfully logged out !!";
+            errorMessage = "Выход из учетной записи выполнен успешно";
         }
         model.addAttribute("errorMessage", errorMessage);
         return "login";
@@ -37,6 +37,6 @@ public class LoginController {
         if (auth != null) {
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
-        return "redirect:/accidents/login?logout=true";
+        return "redirect:/users/login?logout=true";
     }
 }

@@ -33,7 +33,7 @@
 <!--                    <span th:text="${user.username}"></span>-->
 <!--                    <span> | Войти</span>-->
 <!--                </a>-->
-                <a class="nav-item nav-link" th:if="${user.username != 'Гость'}" th:href="@{/accidents/logout}">
+                <a class="nav-item nav-link" th:if="${user.username != 'Гость'}" th:href="@{/users/logout}">
                     <span th:text="${user.username}"></span>
                     <span> | Выйти</span>
                 </a>
