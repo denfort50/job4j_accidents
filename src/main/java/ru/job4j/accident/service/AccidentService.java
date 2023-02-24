@@ -24,7 +24,7 @@ public class AccidentService {
     }
 
     public List<Accident> findAll() {
-        List<Accident> accidentList = (List<Accident>) accidentRepository.findAll();
+        List<Accident> accidentList = accidentRepository.findAll();
         return accidentList.stream().sorted(Comparator.comparingInt(Accident::getId)).collect(Collectors.toList());
     }
 

@@ -22,7 +22,7 @@ public class RuleService {
     }
 
     public List<Rule> getRulesFromDB() {
-        List<Rule> rules = (List<Rule>) ruleRepository.findAll();
+        List<Rule> rules = ruleRepository.findAll();
         return rules.stream().sorted(Comparator.comparingInt(Rule::getId)).collect(Collectors.toList());
     }
 

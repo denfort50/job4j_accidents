@@ -20,7 +20,7 @@ public class AccidentTypeService {
     }
 
     public final List<AccidentType> getAccidentTypesFromDB() {
-        List<AccidentType> accidentTypes = (List<AccidentType>) accidentTypeRepository.findAll();
+        List<AccidentType> accidentTypes = accidentTypeRepository.findAll();
         return accidentTypes.stream().sorted(Comparator.comparingInt(AccidentType::getId)).collect(Collectors.toList());
     }
 
