@@ -29,11 +29,7 @@
                 <a class="nav-item nav-link" href="#">Главная</a>
                 <a class="nav-item nav-link" th:href="@{/accidents/index}">Инциденты</a>
                 <a class="nav-item nav-link active" th:href="@{/accidents/createAccident}">Добавить инцидент</a>
-<!--                <a class="nav-item nav-link" th:if="${user.username == 'Гость'}" th:href="@{/accidents/login}">-->
-<!--                    <span th:text="${user.username}"></span>-->
-<!--                    <span> | Войти</span>-->
-<!--                </a>-->
-                <a class="nav-item nav-link" th:if="${user.username != 'Гость'}" th:href="@{/users/logout}">
+                <a class="nav-item nav-link" th:href="@{/users/logout}">
                     <span th:text="${user.username}"></span>
                     <span> | Выйти</span>
                 </a>
