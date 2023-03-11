@@ -12,6 +12,7 @@
     <groupId>ru.job4j</groupId>
     <artifactId>job4j_accidents</artifactId>
     <version>1.0</version>
+    <packaging>war</packaging>
 
     <dependencies>
         <dependency>
@@ -86,6 +87,12 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+            <version>3.6.2</version>
         </dependency>
 
     </dependencies>
