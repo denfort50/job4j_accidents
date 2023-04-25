@@ -20,15 +20,25 @@
 * JDK 17
 * Apache Maven 3.8
 * PostgreSQL 14
+* Docker
 
 ## Инструкция по запуску проекта
+### Используя Docker в Linux
+1) Клонировать проект `git clone https://github.com/denfort50/job4j_accidents`
+2) Заменить цифры "127.0.0.1" на "db" в файлах liquibase.properties и db.properties
+3) Перейти в папку с проектом `cd job4j_accidents`
+4) Собрать образ `docker-compose build`
+5) Запустить контейнеры `docker-compose up`
+6) Перейти на `localhost/accidents/index`
+
+### Не используя Docker
 1) Скачать и разархивировать проект
 2) В PostgreSQL создать базу данных cinema (url = `jdbc:postgresql://127.0.0.1:5432/accidents`)
 3) Открыть командную строку и перейти в папку с проектом, например `cd c:\projects\job4j_accidents`
 4) Выполнить команду `mvn install`
 5) Перейти в папку target командой `cd target`
 6) Выполнить команду `java -jar job4j_accidents-1.0.jar`
-7) Перейти по ссылке `http://localhost:8081/accidents`
+7) Перейти по ссылке `http://localhost:8081/accidents/index`
 
 ## Взаимодействие с приложением
 
